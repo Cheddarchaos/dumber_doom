@@ -3,8 +3,6 @@ import requests
 import random
 import math
 
-from pprint import pprint as pp
-
 
 r = requests.get("http://localhost:6001/api/player")
 
@@ -12,7 +10,7 @@ angle1 = r.json()["angle"]
 pos = r.json()["position"]
 
 print(str(pos))
-
+#turn to specified angle as quickly as possible
 def turn_to_angle(angle):
     r = requests.get("http://localhost:6001/api/player")
     start_angle = r.json()["angle"]
@@ -36,6 +34,7 @@ def turn_to_angle(angle):
     else:
         requests.post("http://localhost:6001/api/player/turn", json={"type": "left", "target_angle": angle})
 
+#finds angle between player and given point
 def find_angle(x, y):
     r = requests.get("http://localhost:6001/api/player")
     dx = x - r.json()["position"]["x"]
@@ -43,11 +42,11 @@ def find_angle(x, y):
     angle_rad = math.atan2(dy,dx)
     angle = (angle_rad*(180/math.pi))
     return angle
-
+#
 def aim_point(x, y):
     angle = find_angle(x,y)
     turn_to_angle(angle)
 
 
-
-aim_point(r.json()["position"]["x"],r.json()["position"]["y"]+10)
+#aim_point(-1400,13)
+#turn_to_angle(1)
