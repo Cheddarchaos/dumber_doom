@@ -83,6 +83,6 @@ def aim_point(x, y):
 def aim_point_fast(x, y):
     angle = find_angle(x,y)
     turn_to_angle_fast(angle)
-
+"""
+Example:
 aim_point_fast(-1400,13)
-#turn_to_angle(1)
