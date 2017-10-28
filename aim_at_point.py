@@ -41,7 +41,6 @@ def find_angle(x, y):
     dx = x - r.json()["position"]["x"]
     dy = y - r.json()["position"]["y"]
     angle_rad = math.atan2(dy,dx)
-    print(angle_rad)
     angle = (angle_rad*(180/math.pi))
     return angle
 
@@ -49,7 +48,6 @@ def aim_point(x, y):
     angle = find_angle(x,y)
     turn_to_angle(angle)
 
-#print (find_angle(0,0))
 
 
 aim_point(r.json()["position"]["x"],r.json()["position"]["y"]+10)
