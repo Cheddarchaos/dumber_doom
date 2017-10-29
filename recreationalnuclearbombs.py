@@ -17,8 +17,11 @@ def Aimbot(target, list_pl, shots):
     Ytarget = []
     Targetlist = []
 
+    px = r.text
+    playerid = (json.loads(px))["id"]
+    print(list_pl)
     for entity in list_pl:
-        if entity["type"] == target and entity["console-player"]:
+        if entity["type"] == target and not entity["isConsolePlayer"]:
             Targetlist.append(entity["id"])
             tempo = (entity["position"])
             Xtarget.append(tempo["x"])
@@ -38,16 +41,13 @@ def Aimbot(target, list_pl, shots):
 
         for jeff in range(shots):
             for elt in Targetlist:
-                print("x")
-                derpstring = 'http://localhost:6001/api/world/los/0/%s' % elt
+                derpstring = 'http://localhost:6001/api/world/los/%s/%s' % (playerid,elt)
                 lineos = requests.get(derpstring)
                 memes = lineos.text
                 lineos2 = json.loads(memes)
-                print("y")
                 if "los" in lineos2:
                     if lineos2["los"]:
                         requests.post('http://localhost:6001/api/player/actions', json={"type": "shoot","amount": 3})
-                print("z")
 
 """"
 for i in range(2):

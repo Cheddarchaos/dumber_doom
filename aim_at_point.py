@@ -6,10 +6,7 @@ connect = "http://localhost:6001/api/player"
 
 r = requests.get("http://localhost:6001/api/player")
 
-angle1 = r.json()["angle"]
-pos = r.json()["position"]
 
-print(str(pos))
 #turn to specified angle in correct direction
 def turn_to_angle(angle):
     r = requests.get("http://localhost:6001/api/player")
@@ -85,4 +82,4 @@ def aim_point_fast(x, y):
 
 
 #turn_to_angle(0)
-aim_point(-1400,13)
+#aim_point(-1400,13)

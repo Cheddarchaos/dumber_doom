@@ -8,8 +8,8 @@ import math
 j = 0
 while True:
     listobjects = requests.get("http://localhost:6001/api/world/objects")
-    list_players = requests.get("http://localhost:6001/api/world/players")
-
+    list_players = requests.get("http://localhost:6001/api/players")
+    print(list_players)
     playerdata = list_players.text
     list_pl = json.loads(playerdata)
 
@@ -21,6 +21,8 @@ while True:
     x, y = move_toward.closest_target(move_toward.choose_dest(), list_obj)
 
     move_toward.move_toward(x,y)
+    requests.post("http://localhost:6001/api/player/actions", json={'type': 'use'})
+
 
     j += 1
     if j > 30:
