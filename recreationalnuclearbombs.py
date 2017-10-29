@@ -3,13 +3,13 @@ import json
 import math
 import random
 import aim_at_point
-
+portvariable = 6001
 
 def Aimbot(target, list_pl, shots):
 
     from pprint import pprint as pp
 
-    connect = "http://localhost:6001/api/player"
+    connect = "http://localhost:%s/api/player" % portvariable
 
     r = requests.get(connect)
 
@@ -41,13 +41,13 @@ def Aimbot(target, list_pl, shots):
 
         for jeff in range(shots):
             for elt in Targetlist:
-                derpstring = 'http://localhost:6001/api/world/los/%s/%s' % (playerid,elt)
+                derpstring = 'http://localhost:%s/api/world/los/%s/%s' % (portvariable,playerid,elt)
                 lineos = requests.get(derpstring)
                 memes = lineos.text
                 lineos2 = json.loads(memes)
                 if "los" in lineos2:
                     if lineos2["los"]:
-                        requests.post('http://localhost:6001/api/player/actions', json={"type": "shoot","amount": 3})
+                        requests.post('http://localhost:%s/api/player/actions' % portvariable, json={"type": "shoot","amount": 3})
 
 """"
 for i in range(2):

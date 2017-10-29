@@ -2,14 +2,15 @@
 import requests
 import random
 import math
-connect = "http://localhost:6001/api/player"
+portvariable = 6001
+connect = "http://localhost:%s/api/player" % portvariable
 
-r = requests.get("http://localhost:6001/api/player")
+r = requests.get("http://localhost:%s/api/player" % portvariable)
 
 
 #turn to specified angle in correct direction
 def turn_to_angle(angle):
-    r = requests.get("http://localhost:6001/api/player")
+    r = requests.get("http://localhost:%s/api/player" % portvariable)
     start_angle = r.json()["angle"]
     if angle == 0 or angle == 360:
         rand = random.uniform(0, 1)
@@ -36,7 +37,7 @@ def turn_to_angle(angle):
 
 # turn to specified angle in correct direction as quickly as possible
 def turn_to_angle_fast(angle):
-    r = requests.get("http://localhost:6001/api/player")
+    r = requests.get("http://localhost:%s/api/player" % portvariable)
     start_angle = r.json()["angle"]
     if angle == 0 or angle == 360:
         rand = random.uniform(0, 1)
@@ -66,7 +67,7 @@ def turn_to_angle_fast(angle):
 
 #finds angle between player and given point
 def find_angle(x, y):
-    r = requests.get("http://localhost:6001/api/player")
+    r = requests.get("http://localhost:%s/api/player" % portvariable)
     dx = x - r.json()["position"]["x"]
     dy = y - r.json()["position"]["y"]
     angle_rad = math.atan2(dy,dx)

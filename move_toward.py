@@ -4,11 +4,12 @@ import aim_at_point
 import json
 import math
 import pprint as pp
+portvariable = 6001
 
 orX = -1304
 orY = -590
 
-connect = "http://localhost:6001/api"
+connect = "http://localhost:%s/api" % portvariable
 
 r = requests.get(connect+ "/player")
 
@@ -56,7 +57,7 @@ def move_toward(x,y):
 
 
 def closest_target(target, list_obj):
-    connect = "http://localhost:6001/api/player"
+    connect = "http://localhost:%s/api/player" % portvariable
 
     r = requests.get(connect)
     angle1 = r.json()["angle"]
@@ -106,7 +107,7 @@ def closest_target(target, list_obj):
         return x, y
 
 def choose_dest():
-    connect = "http://localhost:6001/api"
+    connect = "http://localhost:%s/api" % portvariable
     listobjects = requests.get(connect + "/world/objects")
     gooddata = listobjects.text
     list_obj = json.loads(gooddata)
@@ -120,26 +121,28 @@ def choose_dest():
         if closest_target('Shotgun shells', list_obj) != None:
             print("Shotgun shells")
             return 'Shotgun shells'
-
+        elif closest_target('Shotgun', list_obj) != None:
+            return 'Shotgun'
 
     if not r.json()["weapons"]["Shotgun"]:
         if closest_target('Shotgun', list_obj) != None:
             print('Shotgun')
             return 'Shotgun'
 
+    if r.json()["armor"] < 50:
+        if closest_target('armor', list_obj) != None:
+            print("armor")
+            return 'Green armor 100%'
+
     if not r.json()["weapons"]["Rocket Launcher"]:
         if closest_target('Rocket launcher', list_obj) != None:
             return 'Rocket launcher'
-        
+
     if r.json()["ammo"]["Bullets"] < 15:
         if closest_target('Ammo clip', list_obj) != None:
             print('Ammo clip')
             return 'Ammo clip'
 
-    if r.json()["armor"] < 50:
-        if closest_target('armor', list_obj) != None:
-            print("armor")
-            return 'Green armor 100%'
 
     if r.json()["health"] < 40:
         if closest_target('Health Potion +1% health', list_obj) != None:
@@ -151,18 +154,3 @@ listobjects = requests.get(connect + "/world/objects")
 gooddata = listobjects.text
 list_obj = json.loads(gooddata)
 
-
-"""
-def orbit_target(x, y):
-"""
-
-
-"""
-for i in range(50):
-    listobjects = requests.get("http://localhost:6001/api/world/objects")
-
-    gooddata = listobjectes your characters armor class. The Mage receives the most armor from this and the Fighter receives the least. s.text
-    list_obj = json.loads(gooddata)
-
-    move_to_target('Shotgun', list_obj)   
-"""
