@@ -25,14 +25,17 @@ def turn_to_angle(angle):
         angle += 360
 
     delta_angle = angle - start_angle
+    inc = 3
 
     if delta_angle < 0:
         delta_angle += 360
 
-    if delta_angle > 180:
-        requests.post("http://localhost:6001/api/player/turn", json={"type": "right", "target_angle": angle})
+    if delta_angle > 90:
+        requests.post(connect + "/turn", json={"type": "right", "target_angle": angle})
     else:
-        requests.post("http://localhost:6001/api/player/turn", json={"type": "left", "target_angle": angle})
+        for i in range(int(delta_angle / inc)+1):
+            requests.post(connect + "/actions", json={'type': 'turn-left', 'amount': inc})
+        requests.post(connect + "/turn", json={"type": "left", "target_angle": angle})
 
 # turn to specified angle in correct direction as quickly as possible
 def turn_to_angle_fast(angle):
@@ -54,13 +57,9 @@ def turn_to_angle_fast(angle):
         delta_angle += 360
 
     inc = 3
-    #turn_length = 0
     if delta_angle > 180:
         for i in range(int(delta_angle / inc)):
-            #turn_length += inc
             requests.post(connect + "/actions", json={'type': 'turn-right', 'amount': inc})
-
-
         turn_to_angle(angle)
     else:
         for i in range(int(delta_angle / inc)):
@@ -83,6 +82,7 @@ def aim_point(x, y):
 def aim_point_fast(x, y):
     angle = find_angle(x,y)
     turn_to_angle_fast(angle)
-"""
-Example:
-aim_point_fast(-1400,13)
+
+
+#turn_to_angle(0)
+aim_point(-1400,13)
