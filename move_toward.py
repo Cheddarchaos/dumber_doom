@@ -127,6 +127,10 @@ def choose_dest():
             print('Shotgun')
             return 'Shotgun'
 
+    if not r.json()["weapons"]["Rocket Launcher"]:
+        if closest_target('Rocket launcher', list_obj) != None:
+            return 'Rocket launcher'
+        
     if r.json()["ammo"]["Bullets"] < 15:
         if closest_target('Ammo clip', list_obj) != None:
             print('Ammo clip')
